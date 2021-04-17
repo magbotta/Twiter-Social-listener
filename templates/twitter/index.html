@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% block body %}
+    <div class="col-md-12">
+        <ol class="breadcrumb no-padding-left">
+            <li><a href="/">HOME</a></li>
+            <li><a href="/twitter">TWITTER HOME</a></li>
+        </ol>
+    </div>
+
+    <div class="col-md-12 margin-bottom-50">
+        <h1 class="text-color-red">TWITTER SERVICES</h1>
+        <hr>
+    </div>
+
+    <div class="col-md-3 text-center">
+        <a href="/twitter/listener" >
+            <h2>
+                <i class="fa fa-assistive-listening-systems font-27"></i>
+            </h2>
+            <p>
+                <strong>Tweets <span class="text-color-red">Listener</span></strong>
+            </p>
+        </a>
+    </div>
+    <div class="col-md-3 text-center">
+        <a href="/twitter/collector" >
+            <h2>
+                <i class="fa fa-file-o"></i>
+            </h2>
+            <p>
+                <strong><span class="text-color-red">Tweets</span> Collector</strong>
+            </p>
+        </a>
+    </div>
+    <div class="col-md-3 text-center">
+        <a href="/twitter/follower" >
+            <h2>
+                <i class="fa fa fa-file-o"></i>
+            </h2>
+            <p>
+                <strong><span class="text-color-red">Followers</span> Collector</strong>
+            </p>
+        </a>
+    </div>
+    <div class="col-md-3 text-center">
+        <a href="/twitter/friends" >
+            <h2>
+                <i class="fa fa-user-o"></i>
+            </h2>
+            <p>
+                <strong><span class="text-color-red">Friends</span>Collector</strong>
+            </p>
+        </a>
+    </div>
+    <div class="col-md-12 margin-top-100">
+
+        <h2><i class="fa fa-twitter title-icons-pipe"></i> Process Lists
+            <small> last update: {{ data[0]['last_update'] if data else 'start your first process' }}</small>
+            <span class="pull-right"><a href="/twitter/refresh" class="btn custom-btn">Refresh List</a> </span>
+        </h2>
+        <hr class="margin-bottom-50">
+
+        <table class="table table-striped">
+            <thead>
+                    <th>Last Update</th>
+                    <th>Created At</th>
+                    <th>Name</th>
+                    <th>PID</th>
+                    <th>Is Alive</th>
+                    <th>STOP</th>
+                </hr>
+            </thead>
+            <tbody>
+            {% for entry in data %}
+                <tr>
+                    <td>{{ entry['last_update'] }}</td>
+                    <td>{{ entry['created'] }}</td>
+                    <td>{{ entry['name'] }}</td>
+                    <td>{{ entry['pid'] }}</td>
+                    {% if entry['is_alive'] %}
+                        <td> <span class="glyphicon glyphicon-ok green" aria-hidden="true"></span> </td>
+                        <td>
+                            <a href="/twitter/stop/{{ entry['pid'] }}" class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove-circle"></span> STOP</a>
+                        </td>
+                    {% else %}
+                        <td> <span class="glyphicon glyphicon-remove red" aria-hidden="true"></span> </td>
+                        {% if entry['terminated'] %}
+                            <td> <span class="glyphicon glyphicon-ok green"></span> </td>
+                        {% else %}
+                            <td> <span class="glyphicon glyphicon-off red"></span> </td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
