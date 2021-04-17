@@ -51,5 +51,4 @@ For now, we only support Twitter APIs:
     /api/v1/twitter
     
 ## Credits
-
-Developed with <3 from TOP-IX Hackademy
+https://github.com/topix-hackademy/social-listener
